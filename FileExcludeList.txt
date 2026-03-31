@@ -1,0 +1,12 @@
+﻿# 排除的文件和当前文件夹
+FilesName-txt.bat
+FilesName-md.bat
+FilesName-html.bat
+FilesName-html+web.bat
+FilesName-html+web.ps1
+TempWebServ.bat
+FileExcludeList.txt
+FileList.html
+FileList.md
+FileList.txt
+index.html
