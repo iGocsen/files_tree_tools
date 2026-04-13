@@ -6,7 +6,7 @@ chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 set "mdFile=FileList.md"
-set "htmlFile=FileList.html"
+set "htmlFile=index.html"
 set "currentDir=%cd%"
 for %%A in ("%currentDir%") do set "rootFolderName=%%~nxA"
 
@@ -155,9 +155,9 @@ echo.
 echo Generated files:
 echo   1. FileList.txt   (Tree structure)
 echo   2. FileList.md    (Markdown format)
-echo   3. FileList.html  (HTML format - Recommended)
+echo   3. index.html  (HTML format - Recommended)
 echo.
-echo Tip: Open FileList.html in your browser.
+echo Tip: Open index.html in your browser.
 echo ========================================
 echo.
 

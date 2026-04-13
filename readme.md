@@ -6,7 +6,7 @@
 
 - 🌳 **树状结构** - 生成完整的目录树形结构（FileList.txt）
 - 📝 **Markdown 格式** - 生成带链接的 Markdown 文件列表（FileList.md）
-- 🌐 **HTML 网页** - 生成美观的 HTML 文件列表页面（FileList.html）
+- 🌐 **HTML 网页** - 生成美观的 HTML 文件列表页面（FileList.html 或 index.html）
 - 🔗 **文件链接** - `.md` 及 `.html` 文件均带有可点击的打开/下载链接
 - 🚫 **排除配置** - 支持自定义排除文件和文件夹
 - 📡 **网络服务** - 可选启动临时 HTTP 服务器，支持局域网访问
@@ -16,8 +16,8 @@
 
 | 文件名 | 类型 | 功能描述 |
 |--------|------|----------|
-| [FilesName-html+web.bat](FilesName-html+web.bat) | 批处理 | **推荐** - 生成 HTML+MD+TXT 并可选启动网络服务 |
-| [FilesName-html+web.ps1](FilesName-html+web.ps1) | PowerShell | 同上，使用 PowerShell 实现，Argon UI 样式 |
+| [FilesName-html+web.ps1](FilesName-html+web.ps1) | PowerShell | **推荐** - 生成 HTML+MD+TXT 并可选启动网络服务，Argon UI 样式 |
+| [FilesName-html+web.bat](FilesName-html+web.bat) | 批处理 | 同上，非 Argon UI 样式 |
 | [FilesName-html.bat](FilesName-html.bat) | 批处理 | 生成 HTML+MD+TXT 文件列表 |
 | [FilesName-md.bat](FilesName-md.bat) | 批处理 | 仅生成 Markdown 文件列表 |
 | [FilesName-txt.bat](FilesName-txt.bat) | 批处理 | 仅生成树状结构文件 |
@@ -26,26 +26,31 @@
 
 ## 🚀 快速使用
 
-### 方式一：批处理脚本（推荐）
+### 方式一：PowerShell 脚本（推荐）
+
+```powershell
+# 首次运行需设置执行策略
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+# 运行脚本（功能最全: 支持排除子文件夹及其内容）
+.\FilesName-html+web.ps1
+
+# 运行后按提示选择是否启动网络服务
+ 是否启动临时网络服务让其他设备访问？
+   Y - 启动 PowerShell 内置 HTTP 服务器 (推荐)
+   N - 跳过
+```
+
+### 方式二：批处理脚本
 
 ```bash
-# 运行主脚本（功能最全）
+# 运行主脚本（只支持排除文件或子文件夹，无法通过设置子文件夹名称排除子文件夹下的文件）
 FilesName-html+web.bat
 
 # 运行后按提示选择是否启动网络服务
 # Y - 启动 Python HTTP 服务器
 # H - 启动 HFS 服务器
 # N - 跳过网络服务
-```
-
-### 方式二：PowerShell 脚本
-
-```powershell
-# 首次运行需设置执行策略
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-
-# 运行脚本
-.\FilesName-html+web.ps1
 ```
 
 ### 方式三：独立功能脚本
@@ -59,6 +64,9 @@ FilesName-md.bat
 
 # 仅生成树状结构
 FilesName-txt.bat
+
+# 临时 Web 服务
+TempWebServ.bat
 ```
 
 ## ⚙️ 配置说明
@@ -72,6 +80,7 @@ FilesName-txt.bat
 FilesName-txt.bat
 FilesName-md.bat
 FileList.html
+index.html
 FileList.md
 ```
 
@@ -94,6 +103,7 @@ FileList.md
 | `FileList.txt` | 纯文本 | 树状目录结构 |
 | `FileList.md` | Markdown | 带链接的文件列表 |
 | `FileList.html` | HTML 网页 | 可视化文件列表（推荐在浏览器打开） |
+| `index.html` | HTML 网页 | 可视化文件列表, `*-html.bat` 生成 |
 
 ## 🖼️ HTML 页面特性
 
@@ -154,7 +164,7 @@ python -m http.server 8080
 
 ### HTML 页面
 
-打开 `FileList.html` 即可查看美观的文件列表网页，支持点击直接打开文件。
+打开 `FileList.html` 或 `index.html` 即可查看美观的文件列表网页，支持点击直接打开文件。
 
 ## 🆘 常见问题
 

@@ -100,8 +100,10 @@ if (Test-Path $excludeConfig) {
     
     foreach ($line in $lines) {
         $item = $line.Trim()
-        if ($item.StartsWith("/")) {
-            $excludeFolders += $item.TrimStart("/")
+        # if ($item.StartsWith("/")) {
+        #     $excludeFolders += $item.TrimStart("/")
+        if ($item.EndsWith("/")) {
+            $excludeFolders += $item.TrimEnd("/")
         } else {
             $excludeFiles += $item
         }
@@ -137,8 +139,30 @@ $allFiles = Get-ChildItem -Path $OutputDir -Recurse -File -ErrorAction SilentlyC
 # 应用排除规则
 if ($excludeFiles.Count -gt 0 -or $excludeFolders.Count -gt 0) {
     $allFiles = $allFiles | Where-Object { 
-        $excludeFiles -notcontains $_.Name -and
-        ($excludeFolders.Count -eq 0 -or ($_.DirectoryName -split '\\') -notmatch ($excludeFolders -join '|'))
+        # $excludeFiles -notcontains $_.Name -and
+        # ($excludeFolders.Count -eq 0 -or ($_.DirectoryName -split '\\') -notmatch ($excludeFolders -join '|'))
+
+        # 1. 排除文件名
+        $isFileExcluded = $excludeFiles -contains $_.Name
+        
+        # 2. 排除文件夹
+        $isFolderExcluded = $false
+        if ($excludeFolders.Count -gt 0) {
+            # 获取相对于当前路径的目录部分，或者直接检查全路径
+            # 这里使用 FullName 进行匹配更稳妥，但要注意避免误杀同名子串
+            # 更好的方式是检查路径的每一级目录是否在排除列表中
+            
+            $pathParts = $_.DirectoryName.Split('\')
+            foreach ($part in $pathParts) {
+                if ($excludeFolders -contains $part) {
+                    $isFolderExcluded = $true
+                    break
+                }
+            }
+        }
+
+        # 只有当文件不在排除列表 且 文件夹不在排除列表时，才保留
+        -not ($isFileExcluded -or $isFolderExcluded)
     }
 }
 # Write-Host "  共扫描到 $($allFiles.Count) 个文件" -ForegroundColor Gray
